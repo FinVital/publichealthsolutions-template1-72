@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Menu, X, Globe, ChevronDown } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, Phone } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,9 +42,9 @@ const MainHeader = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="text-2xl font-display font-bold text-phs-green">Public Health Solutions</span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -105,6 +105,7 @@ const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => {
     { name: 'Programs', href: '#programs' },
     { name: 'Impact', href: '#impact' },
     { name: 'Get Help', href: '#service-finder' },
+    { name: 'Voice Agents', href: '/voice-agents', isPage: true },
     { name: 'About Us', href: '#about' },
     { name: 'News & Events', href: '#news' },
   ];
@@ -112,17 +113,32 @@ const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => {
   return (
     <>
       {navLinks.map((link) => (
-        <a
-          key={link.name}
-          href={link.href}
-          className={`${
-            isMobile 
-              ? 'block py-2 hover:text-phs-green focus:text-phs-green' 
-              : 'font-medium text-gray-700 hover:text-phs-green focus:text-phs-green'
-          }`}
-        >
-          {link.name}
-        </a>
+        link.isPage ? (
+          <Link
+            key={link.name}
+            to={link.href}
+            className={`${
+              isMobile 
+                ? 'block py-2 hover:text-phs-green focus:text-phs-green flex items-center' 
+                : 'font-medium text-gray-700 hover:text-phs-green focus:text-phs-green flex items-center'
+            }`}
+          >
+            {link.name === 'Voice Agents' && <Phone size={16} className="mr-1" />}
+            {link.name}
+          </Link>
+        ) : (
+          <a
+            key={link.name}
+            href={link.href}
+            className={`${
+              isMobile 
+                ? 'block py-2 hover:text-phs-green focus:text-phs-green' 
+                : 'font-medium text-gray-700 hover:text-phs-green focus:text-phs-green'
+            }`}
+          >
+            {link.name}
+          </a>
+        )
       ))}
     </>
   );
