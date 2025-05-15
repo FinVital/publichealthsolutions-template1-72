@@ -9,7 +9,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const languageOptions = [
+// Fixed type definition to make 'dir' consistently optional
+type LanguageOption = {
+  name: string;
+  code: string;
+  dir?: string;
+};
+
+const languageOptions: LanguageOption[] = [
   { name: 'English', code: 'en' },
   { name: 'Español', code: 'es' },
   { name: 'العربية', code: 'ar', dir: 'rtl' },
@@ -24,7 +31,7 @@ const MainHeader = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLanguageChange = (language: typeof languageOptions[0]) => {
+  const handleLanguageChange = (language: LanguageOption) => {
     setCurrentLanguage(language);
     // In a real implementation, this would change the language of the site
   };
@@ -123,9 +130,9 @@ const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => {
 
 // Language Selector Component
 interface LanguageSelectorProps {
-  currentLanguage: { name: string; code: string; dir?: string };
-  onLanguageChange: (language: { name: string; code: string; dir?: string }) => void;
-  languages: Array<{ name: string; code: string; dir?: string }>;
+  currentLanguage: LanguageOption;
+  onLanguageChange: (language: LanguageOption) => void;
+  languages: LanguageOption[];
   isMobile?: boolean;
 }
 
